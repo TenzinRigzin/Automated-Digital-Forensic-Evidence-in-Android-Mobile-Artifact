@@ -1,0 +1,420 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.tl{padding:1.5rem 0;font-family:var(--font-sans)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.top-header{margin-bottom:1.25rem}
+.top-header h1{font-size:20px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px}
+.top-header p{font-size:13px;color:var(--color-text-secondary)}
+.deadlines{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.25rem}
+.dl{border-radius:var(--border-radius-md);padding:11px 13px;border:0.5px solid}
+.dl-done{background:#EAF3DE;border-color:#3B6D11}
+.dl-red{background:#FCEBEB;border-color:#A32D2D}
+.dl-amber{background:#FAEEDA;border-color:#854F0B}
+.dl-green{background:#EAF3DE;border-color:#3B6D11}
+.dl-lbl{font-size:10px;font-weight:500;letter-spacing:.4px;text-transform:uppercase;margin-bottom:2px}
+.dl-done .dl-lbl,.dl-green .dl-lbl{color:#3B6D11}
+.dl-red .dl-lbl{color:#A32D2D}
+.dl-amber .dl-lbl{color:#854F0B}
+.dl-date{font-size:17px;font-weight:500;color:var(--color-text-primary);margin-bottom:2px}
+.dl-desc{font-size:11px;color:var(--color-text-secondary);line-height:1.4}
+.bar-wrap{margin-bottom:1.25rem}
+.bar-track{height:10px;border-radius:5px;overflow:hidden;display:flex;background:var(--color-background-secondary);margin-bottom:5px}
+.seg-done{background:#639922;flex:0 0 20%}
+.seg-now{background:#E24B4A;flex:0 0 4%}
+.seg-p1{background:#BA7517;flex:0 0 22%}
+.seg-p2{background:#1D9E75;flex:0 0 54%}
+.bar-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--color-text-secondary)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:1.25rem}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--color-text-secondary)}
+.leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.ld-done{background:#639922}
+.ld-today{background:#E24B4A}
+.ld-p1{background:#BA7517}
+.ld-p3{background:#1D9E75}
+.info-note{display:flex;align-items:flex-start;gap:8px;padding:9px 12px;background:var(--color-background-info);border:0.5px solid var(--color-border-info);border-radius:var(--border-radius-md);margin-bottom:1.25rem;font-size:12px;color:var(--color-text-info);line-height:1.5}
+.warn-note{display:flex;align-items:flex-start;gap:8px;padding:9px 12px;background:var(--color-background-warning);border:0.5px solid var(--color-border-warning);border-radius:var(--border-radius-md);margin-bottom:1.25rem;font-size:12px;color:var(--color-text-warning);line-height:1.5}
+.phase-block{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;margin-bottom:10px}
+.phase-head{display:flex;align-items:center;gap:10px;padding:11px 14px;background:var(--color-background-secondary);cursor:pointer;user-select:none}
+.ph-badge{border-radius:20px;padding:3px 10px;font-size:11px;font-weight:500;white-space:nowrap}
+.ph-done{background:#EAF3DE;color:#27500A}
+.ph-today{background:#FCEBEB;color:#791F1F}
+.ph-amber{background:#FAEEDA;color:#633806}
+.ph-teal{background:#E1F5EE;color:#085041}
+.ph-green{background:#EAF3DE;color:#27500A}
+.phase-title{flex:1;font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.phase-dates{font-size:11px;color:var(--color-text-secondary);white-space:nowrap}
+.chevron{font-size:14px;color:var(--color-text-secondary);transition:transform .2s}
+.chevron.open{transform:rotate(180deg)}
+.phase-body{background:var(--color-background-primary);padding:0 14px 12px}
+.week-row{display:flex;gap:10px;padding:9px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.week-row:last-child{border-bottom:none}
+.wk-meta{min-width:108px}
+.wk-tag{font-size:11px;font-weight:500;color:var(--color-text-secondary);margin-bottom:2px}
+.wk-days{font-size:10px;color:var(--color-text-secondary)}
+.wk-tasks{flex:1}
+.task{font-size:12px;color:var(--color-text-primary);margin-bottom:5px;display:flex;gap:6px;line-height:1.5;align-items:flex-start}
+.task:last-child{margin-bottom:0}
+.dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.dot-done{background:#639922}
+.dot-today{background:#E24B4A}
+.dot-amber{background:#BA7517}
+.dot-teal{background:#1D9E75}
+.dot-green{background:#639922}
+.ms-pill{display:inline-block;font-size:10px;font-weight:500;border-radius:4px;padding:1px 7px;margin-left:5px;vertical-align:middle}
+.ms-done{background:#C0DD97;color:#27500A}
+.ms-red{background:#F7C1C1;color:#791F1F}
+.ms-amber{background:#FAC775;color:#633806}
+.ms-green{background:#C0DD97;color:#27500A}
+.check{color:#639922;font-size:13px;flex-shrink:0;margin-top:1px}
+.today-marker{display:inline-block;background:#E24B4A;color:#FCEBEB;font-size:10px;font-weight:500;border-radius:4px;padding:1px 7px;margin-left:6px;vertical-align:middle}
+.seventy-marker{display:inline-block;background:#BA7517;color:#FAEEDA;font-size:10px;font-weight:500;border-radius:4px;padding:1px 7px;margin-left:6px;vertical-align:middle}
+.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:1.5rem}
+.sum-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:11px 12px}
+.sum-lbl{font-size:10px;color:var(--color-text-secondary);margin-bottom:3px}
+.sum-val{font-size:18px;font-weight:500;color:var(--color-text-primary)}
+.sum-sub{font-size:10px;color:var(--color-text-secondary);margin-top:2px}
+.seventy-box{display:flex;align-items:flex-start;gap:8px;padding:9px 12px;background:#FAEEDA;border:0.5px solid #854F0B;border-radius:var(--border-radius-md);margin:10px 0 0;font-size:12px;color:#633806;line-height:1.5}
+</style>
+
+<div class="tl">
+<h2 class="sr-only">MobiTrace Pro complete project timeline from May 4 to July 15 2026</h2>
+
+<div class="top-header">
+  <h1>MobiTrace Pro — complete project timeline</h1>
+  <p>May 4, 2026 → July 15, 2026 &nbsp;·&nbsp; Started with domain selection, ending with full submission</p>
+</div>
+
+<div class="deadlines">
+  <div class="dl dl-done">
+    <div class="dl-lbl">✓ Completed</div>
+    <div class="dl-date">May 4–18</div>
+    <div class="dl-desc">Domain, topic, architecture, encryption solution all finalized</div>
+  </div>
+  <div class="dl dl-red">
+    <div class="dl-lbl">Deadline 1</div>
+    <div class="dl-date">May 30</div>
+    <div class="dl-desc">Copyright write-up submitted</div>
+  </div>
+  <div class="dl dl-amber">
+    <div class="dl-lbl">Deadline 2</div>
+    <div class="dl-date">May 31</div>
+    <div class="dl-desc">70% tool done — Modules 1–7 + AI report + GUI shell</div>
+  </div>
+</div>
+<div class="deadlines" style="margin-top:-2px">
+  <div class="dl dl-green" style="grid-column:1/-1">
+    <div class="dl-lbl">Final deadline</div>
+    <div class="dl-date" style="display:inline;margin-right:8px">July 15</div>
+    <span class="dl-desc" style="display:inline">Full project complete — GUI chat, research paper, internship report, final presentation</span>
+  </div>
+</div>
+
+<div class="bar-wrap" style="margin-top:1rem">
+  <div class="bar-track">
+    <div class="seg-done"></div>
+    <div class="seg-now"></div>
+    <div class="seg-p1"></div>
+    <div class="seg-p2"></div>
+  </div>
+  <div class="bar-labels">
+    <span>May 4</span>
+    <span>May 18 ← today</span>
+    <span>May 30–31</span>
+    <span>July 15</span>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="leg-item"><div class="leg-dot ld-done"></div>Completed work</div>
+  <div class="leg-item"><div class="leg-dot ld-today"></div>Today (May 18) — active</div>
+  <div class="leg-item"><div class="leg-dot ld-p1"></div>Phase 1 + 2 (parallel build)</div>
+  <div class="leg-item"><div class="leg-dot ld-p3"></div>Phase 3 (complete + submit)</div>
+</div>
+
+<div class="info-note">
+  <i class="ti ti-check" aria-hidden="true"></i>
+  May 4–18 is fully completed research work — domain selected, topic finalized, mentor approved, architecture designed, encryption challenge solved, timeline built, and presentation created.
+</div>
+
+<div class="warn-note">
+  <i class="ti ti-alert-triangle" aria-hidden="true"></i>
+  From today (May 18), Phase 1 (copyright writing) and Phase 2 (tool building) run in parallel — both must complete by May 30–31.
+</div>
+
+<!-- PHASE 0 — COMPLETED -->
+<div class="phase-block">
+  <div class="phase-head" onclick="toggle(this)">
+    <span class="ph-badge ph-done">✓ Done</span>
+    <span class="phase-title">Research & planning — everything decided <span class="today-marker">Completed</span></span>
+    <span class="phase-dates">May 4 – May 18</span>
+    <i class="ti ti-chevron-down chevron open" aria-hidden="true"></i>
+  </div>
+  <div class="phase-body">
+    <div class="week-row">
+      <div class="wk-meta"><div class="wk-tag">Week 1</div><div class="wk-days">May 4–7</div></div>
+      <div class="wk-tasks">
+        <div class="task"><i class="ti ti-check check" aria-hidden="true"></i>Explored cybersecurity problem statements — cross-jurisdictional forensics, deepfake detection, IoT forensics, blockchain evidence</div>
+        <div class="task"><i class="ti ti-check check" aria-hidden="true"></i>Chose domain — Digital Forensics under Cybersecurity</div>
+        <div class="task"><i class="ti ti-check check" aria-hidden="true"></i>Evaluated 3 topic options: Image Forgery, File Recovery, USB Logger</div>
+        <div class="task"><i class="ti ti-check check" aria-hidden="true"></i>Compared Digital Forensics vs AI-Driven Cybersecurity — decided on Digital Forensics</div>
+      </div>
+    </div>
+    <div class="week-row">
+      <div class="wk-meta"><div class="wk-tag">Week 2</div><div class="wk-days">May 8–11</div></div>
+      <div class="wk-tasks">
+        <div class="task"><i class="ti ti-check check" aria-hidden="true"></i>Explored Network Traffic Log Analysis topic (Python-based automated parsing)</div>
+        <div class="task"><i class="ti ti-check check" aria-hidden="true"></i>Shifted network forensics → Mobile forensics based on real-world insight (phones are seized first)</div>
+        <div class="task"><i class="ti ti-check check" aria-hidden="true"></i>Finalized core topic: MobiTrace Pro — automated Android mobile forensic analyzer</div>
+        <div class="task"><i class="ti ti-check check" aria-hidden="true"></i>Designed 6-module extraction architecture: calls, SMS, WhatsApp, images, browser, network</div>
+      </div>
+    </div>
+    <div class="week-row">
+      <div class="wk-meta"><div class="wk-tag">Week 2–3</div><div class="wk-days">May 12–15</div></div>
+      <div class="wk-tasks">
+        <div class="task"><i class="ti ti-check check" aria-hidden="true"></i>Added Module 7 — AI auto report generator using Claude API (biggest novelty)</div>
+        <div class="task"><i class="ti ti-check check" aria-hidden="true"></i>Added AI chat query window — investigator asks questions in plain English → targeted PDF report</div>
+        <div class="task"><i class="ti ti-check check" aria-hidden="true"></i>Finalized output formats — Full PDF + CSV + Targeted Query PDF + Chat Log PDF</div>
+        <div class="task"><i class="ti ti-check check" aria-hidden="true"></i>Designed Desktop folder system — auto-creates "DeviceName_Date" evidence vault</div>
+        <div class="task"><i class="ti ti-check check" aria-hidden="true"></i>Received mentor approval on full MobiTrace Pro concept <span class="ms-pill ms-done">Approved</span></div>
+      </div>
+    </div>
+    <div class="week-row">
+      <div class="wk-meta"><div class="wk-tag">Week 3</div><div class="wk-days">May 15–18</div></div>
+      <div class="wk-tasks">
+        <div class="task"><i class="ti ti-check check" aria-hidden="true"></i>Solved Android encryption challenge — ADB logical extraction bypasses FBE/FDE on unlocked phones</div>
+        <div class="task"><i class="ti ti-check check" aria-hidden="true"></i>Confirmed ADB works universally across Samsung Knox, Realme, OnePlus, Xiaomi encryption</div>
+        <div class="task"><i class="ti ti-check check" aria-hidden="true"></i>Documented WhatsApp workaround — app downgrade method for Android 12+ devices</div>
+        <div class="task"><i class="ti ti-check check" aria-hidden="true"></i>Created 60-day project timeline with 3 hard deadlines</div>
+        <div class="task"><i class="ti ti-check check" aria-hidden="true"></i>Created 10-slide mentor presentation (MobiTrace_Pro_Presentation.pptx) <span class="ms-pill ms-done">Done</span></div>
+        <div class="task"><i class="ti ti-check check" aria-hidden="true"></i>Prepared 3-minute presentation script for mentor</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 1 -->
+<div class="phase-block">
+  <div class="phase-head" onclick="toggle(this)">
+    <span class="ph-badge ph-today">Phase 1</span>
+    <span class="phase-title">Copyright write-up + problem statement report <span class="today-marker">Starts today</span></span>
+    <span class="phase-dates">May 18 – May 30</span>
+    <i class="ti ti-chevron-down chevron open" aria-hidden="true"></i>
+  </div>
+  <div class="phase-body">
+    <div class="week-row">
+      <div class="wk-meta"><div class="wk-tag">Days 1–4</div><div class="wk-days">May 18–21</div></div>
+      <div class="wk-tasks">
+        <div class="task"><span class="dot dot-today"></span>Install Python, ADB, DB Browser for SQLite, VS Code on laptop</div>
+        <div class="task"><span class="dot dot-today"></span>Enable USB debugging on your own phone — run "adb devices" to confirm detection</div>
+        <div class="task"><span class="dot dot-today"></span>Read first 3 research papers on mobile forensics (Google Scholar)</div>
+        <div class="task"><span class="dot dot-today"></span>Begin writing formal problem statement (1 page)</div>
+      </div>
+    </div>
+    <div class="week-row">
+      <div class="wk-meta"><div class="wk-tag">Days 5–8</div><div class="wk-days">May 22–25</div></div>
+      <div class="wk-tasks">
+        <div class="task"><span class="dot dot-today"></span>Read 4 more papers — complete literature review (2 pages, 7+ papers total)</div>
+        <div class="task"><span class="dot dot-today"></span>Draw final system architecture diagram on draw.io</div>
+        <div class="task"><span class="dot dot-today"></span>Write proposed methodology — describe all 7 modules in detail</div>
+      </div>
+    </div>
+    <div class="week-row">
+      <div class="wk-meta"><div class="wk-tag">Days 9–12</div><div class="wk-days">May 26–29</div></div>
+      <div class="wk-tasks">
+        <div class="task"><span class="dot dot-today"></span>Write software description document — each module, input/output, forensic purpose</div>
+        <div class="task"><span class="dot dot-today"></span>Write innovation statement — 4 novelty claims vs existing tools (Cellebrite, AXIOM, Autopsy)</div>
+        <div class="task"><span class="dot dot-today"></span>Write user manual draft — installation and step-by-step usage</div>
+        <div class="task"><span class="dot dot-today"></span>Add name, college, guide name, date to all documents</div>
+      </div>
+    </div>
+    <div class="week-row">
+      <div class="wk-meta"><div class="wk-tag">Days 12–13</div><div class="wk-days">May 29–30</div></div>
+      <div class="wk-tasks">
+        <div class="task"><span class="dot dot-today"></span>Mentor review — get feedback and revise all documents</div>
+        <div class="task"><span class="dot dot-today"></span>Format in IEEE template on Overleaf — combine into one final document</div>
+        <div class="task"><span class="dot dot-today"></span>Submit copyright write-up <span class="ms-pill ms-red">Deadline May 30</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 2 — 70% -->
+<div class="phase-block">
+  <div class="phase-head" onclick="toggle(this)">
+    <span class="ph-badge ph-amber">Phase 2</span>
+    <span class="phase-title">Build Modules 1–7 + AI report + GUI shell (70% tool) <span class="seventy-marker">70% by May 31</span></span>
+    <span class="phase-dates">May 18 – May 31</span>
+    <i class="ti ti-chevron-down chevron open" aria-hidden="true"></i>
+  </div>
+  <div class="phase-body">
+
+    <div class="seventy-box">
+      <i class="ti ti-info-circle" aria-hidden="true"></i>
+      70% means: all 7 extraction + AI modules working fully, plus the basic GUI shell (window + progress bar + report buttons). The AI chat query engine and targeted PDF report are the remaining 30%, completed in Phase 3A.
+    </div>
+
+    <div class="week-row" style="margin-top:4px">
+      <div class="wk-meta"><div class="wk-tag">Days 1–4</div><div class="wk-days">May 18–21</div></div>
+      <div class="wk-tasks">
+        <div class="task"><span class="dot dot-amber"></span>Learn sqlite3, subprocess, os, pathlib — practice small scripts daily</div>
+        <div class="task"><span class="dot dot-amber"></span>Build ADB connector — detects phone automatically, reads device name</div>
+        <div class="task"><span class="dot dot-amber"></span>Build Desktop folder creator — auto-creates "DeviceName_Date" evidence folder</div>
+      </div>
+    </div>
+    <div class="week-row">
+      <div class="wk-meta"><div class="wk-tag">Days 5–9</div><div class="wk-days">May 22–26</div></div>
+      <div class="wk-tasks">
+        <div class="task"><span class="dot dot-amber"></span>Module 1: Call log extractor — contacts2.db → call_logs.csv</div>
+        <div class="task"><span class="dot dot-amber"></span>Module 2: SMS extractor — mmssms.db → sms.csv</div>
+        <div class="task"><span class="dot dot-amber"></span>Module 3: WhatsApp extractor — msgstore.db → whatsapp.csv</div>
+        <div class="task"><span class="dot dot-amber"></span>Module 4: Image metadata extractor — GPS coordinates, camera model, date taken</div>
+      </div>
+    </div>
+    <div class="week-row">
+      <div class="wk-meta"><div class="wk-tag">Days 10–12</div><div class="wk-days">May 27–29</div></div>
+      <div class="wk-tasks">
+        <div class="task"><span class="dot dot-amber"></span>Module 5: Browser history extractor — URLs visited, timestamps, frequency</div>
+        <div class="task"><span class="dot dot-amber"></span>Module 6: Network analysis — WiFi logs, connected IPs, app data usage, suspicious flags</div>
+        <div class="task"><span class="dot dot-amber"></span>Test Modules 1–6 individually on your own phone — verify clean readable output</div>
+      </div>
+    </div>
+    <div class="week-row">
+      <div class="wk-meta"><div class="wk-tag">Day 13</div><div class="wk-days">May 30–31</div></div>
+      <div class="wk-tasks">
+        <div class="task"><span class="dot dot-amber"></span>Build evidence collector — combine all 6 module outputs into one structured JSON</div>
+        <div class="task"><span class="dot dot-amber"></span>Module 7: AI report engine — JSON → Claude API → AI writes full report → PDF + CSV saved automatically</div>
+        <div class="task"><span class="dot dot-amber"></span>Build basic GUI shell — window opens, device name shown, progress bar, report download buttons</div>
+        <div class="task"><span class="dot dot-amber"></span>Connect GUI to all 7 modules — "Start Extraction" button triggers full pipeline end-to-end</div>
+        <div class="task"><span class="dot dot-amber"></span>Full pipeline test: plug phone → modules run → AI report auto-generated → PDF on Desktop <span class="ms-pill ms-amber">70% Done — May 31</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 3A -->
+<div class="phase-block">
+  <div class="phase-head" onclick="toggle(this)">
+    <span class="ph-badge ph-teal">Phase 3A</span>
+    <span class="phase-title">AI chat query engine + targeted report (remaining 30%)</span>
+    <span class="phase-dates">June 1 – June 14</span>
+    <i class="ti ti-chevron-down chevron open" aria-hidden="true"></i>
+  </div>
+  <div class="phase-body">
+    <div class="week-row">
+      <div class="wk-meta"><div class="wk-tag">Week 1</div><div class="wk-days">Jun 1–7</div></div>
+      <div class="wk-tasks">
+        <div class="task"><span class="dot dot-teal"></span>Build AI chat interface inside GUI — text input box, send button, AI response display area</div>
+        <div class="task"><span class="dot dot-teal"></span>Build AI query engine — investigator types plain English → AI searches evidence JSON → answer with exact file locations + timestamps</div>
+        <div class="task"><span class="dot dot-teal"></span>Test query examples: "Did this phone contact +91-XXXXX?" / "Was phone in Mumbai between these dates?"</div>
+      </div>
+    </div>
+    <div class="week-row">
+      <div class="wk-meta"><div class="wk-tag">Week 2</div><div class="wk-days">Jun 8–14</div></div>
+      <div class="wk-tasks">
+        <div class="task"><span class="dot dot-teal"></span>Build targeted query PDF report — findings + exact file paths + timestamps for each evidence item</div>
+        <div class="task"><span class="dot dot-teal"></span>Build query log saver — every Q&A saved as court-submittable PDF (transparent discovery record)</div>
+        <div class="task"><span class="dot dot-teal"></span>Full 100% tool complete — all features working end-to-end <span class="ms-pill ms-done">100% Done</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 3B -->
+<div class="phase-block">
+  <div class="phase-head" onclick="toggle(this)">
+    <span class="ph-badge ph-teal">Phase 3B</span>
+    <span class="phase-title">Testing + validation on real forensic datasets</span>
+    <span class="phase-dates">June 15 – June 30</span>
+    <i class="ti ti-chevron-down chevron open" aria-hidden="true"></i>
+  </div>
+  <div class="phase-body">
+    <div class="week-row">
+      <div class="wk-meta"><div class="wk-tag">Week 3</div><div class="wk-days">Jun 15–21</div></div>
+      <div class="wk-tasks">
+        <div class="task"><span class="dot dot-teal"></span>Full end-to-end test — plug phone → extract → AI report → chat query → PDF — entire pipeline working</div>
+        <div class="task"><span class="dot dot-teal"></span>Download Digital Corpora public Android forensic test dataset (digitalcorpora.org — free)</div>
+        <div class="task"><span class="dot dot-teal"></span>Run MobiTrace Pro on test dataset — compare findings vs Autopsy (free forensic tool)</div>
+      </div>
+    </div>
+    <div class="week-row">
+      <div class="wk-meta"><div class="wk-tag">Week 4</div><div class="wk-days">Jun 22–30</div></div>
+      <div class="wk-tasks">
+        <div class="task"><span class="dot dot-teal"></span>Record results — artifacts found, time taken, AI report quality, false positives</div>
+        <div class="task"><span class="dot dot-teal"></span>Create result comparison tables and graphs using matplotlib</div>
+        <div class="task"><span class="dot dot-teal"></span>Take screenshots of every module output for research paper figures</div>
+        <div class="task"><span class="dot dot-teal"></span>Mentor checkpoint — show full working tool demo <span class="ms-pill ms-done">Mentor review</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 3C -->
+<div class="phase-block">
+  <div class="phase-head" onclick="toggle(this)">
+    <span class="ph-badge ph-green">Phase 3C</span>
+    <span class="phase-title">Research paper + final submission</span>
+    <span class="phase-dates">July 1 – July 15</span>
+    <i class="ti ti-chevron-down chevron open" aria-hidden="true"></i>
+  </div>
+  <div class="phase-body">
+    <div class="week-row">
+      <div class="wk-meta"><div class="wk-tag">Week 5</div><div class="wk-days">Jul 1–7</div></div>
+      <div class="wk-tasks">
+        <div class="task"><span class="dot dot-green"></span>Write full research paper on Overleaf (IEEE two-column format) — abstract, intro, methodology, results</div>
+        <div class="task"><span class="dot dot-green"></span>Write conclusion + future scope (iPhone support, encrypted WhatsApp, multi-device, face recognition)</div>
+        <div class="task"><span class="dot dot-green"></span>Proofread and format — submit paper to IJRASET or IRJET</div>
+      </div>
+    </div>
+    <div class="week-row">
+      <div class="wk-meta"><div class="wk-tag">Week 6</div><div class="wk-days">Jul 8–12</div></div>
+      <div class="wk-tasks">
+        <div class="task"><span class="dot dot-green"></span>Compile final internship report — merge all phases into one complete document</div>
+        <div class="task"><span class="dot dot-green"></span>Build final 10-slide PowerPoint — problem, tool architecture, demo screenshots, results, conclusion</div>
+        <div class="task"><span class="dot dot-green"></span>Mentor final review — revise based on feedback</div>
+      </div>
+    </div>
+    <div class="week-row">
+      <div class="wk-meta"><div class="wk-tag">Final days</div><div class="wk-days">Jul 13–15</div></div>
+      <div class="wk-tasks">
+        <div class="task"><span class="dot dot-green"></span>Practice full presentation with mentor — explain problem, tool, and results clearly</div>
+        <div class="task"><span class="dot dot-green"></span>Final submission + presentation day <span class="ms-pill ms-green">Deadline July 15</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="summary-grid">
+  <div class="sum-card">
+    <div class="sum-lbl">Total duration</div>
+    <div class="sum-val">72 days</div>
+    <div class="sum-sub">May 4 → July 15</div>
+  </div>
+  <div class="sum-card">
+    <div class="sum-lbl">Already completed</div>
+    <div class="sum-val">14 days</div>
+    <div class="sum-sub">Research + planning done</div>
+  </div>
+  <div class="sum-card">
+    <div class="sum-lbl">Hard deadlines</div>
+    <div class="sum-val">3</div>
+    <div class="sum-sub">May 30 · May 31 · Jul 15</div>
+  </div>
+  <div class="sum-card">
+    <div class="sum-lbl">This month target</div>
+    <div class="sum-val">70%</div>
+    <div class="sum-sub">Copyright + Modules 1–7 + GUI shell</div>
+  </div>
+</div>
+
+</div>
+
+<script>
+function toggle(h){
+  const b=h.nextElementSibling;
+  const c=h.querySelector('.chevron');
+  const open=b.style.display!=='none';
+  b.style.display=open?'none':'block';
+  c.classList.toggle('open',!open);
+}
+</script>
