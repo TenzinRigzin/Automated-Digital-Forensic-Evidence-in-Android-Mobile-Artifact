@@ -1,4 +1,4 @@
-# 📱 Mobile SMS Data Extraction Guide (via ADB)
+# 📱 Mobile SMS Data Extraction Guide (via ADB)(Unrooted)
 
 This guide walks you through the step-by-step process of using **Android Debug Bridge (ADB)** to securely extract text message history directly from an Android device onto your computer without relying on cloud backups.
 
