@@ -17,8 +17,15 @@ Before starting the chatbot app, you must process the raw logs pulled from your 
 * **What happens:** This creates or updates a permanent `./chroma_db` folder on your Desktop containing your data's mathematical meanings.
 
 ---
+## 🦙 Step 2: Run Ollama API
 
-## 🎮 Step 2: Run the Chatbot & Export Dashboard
+
+```cmd
+ollama run llama3
+```
+---
+
+## 🎮 Step 3: Run the Chatbot & Export Dashboard
 Once the indexing script reports success, launch the Streamlit graphical user interface:
 
 ```cmd
@@ -29,7 +36,7 @@ python -m streamlit run app.py
 
 ---
 
-## 🧠 Step 3: Understanding the Chronological Intercept Logic
+## 🧠 Step 4: Understanding the Chronological Intercept Logic
 
 Standard vector databases sort answers by text relevance, which scrambles chronological timelines and forces the AI to look at random old rows (e.g., Row 2452) out of order. 
 
