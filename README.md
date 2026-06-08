@@ -93,7 +93,7 @@ MobiTrace Pro bridges the gap by providing:
 └──────────┬──────────┘
            ▼
 ┌─────────────────────┐
-│ Claude AI Engine    │
+│ Ollama AI Engine    │
 └──────────┬──────────┘
            ▼
 ┌──────────────────────────────────┐
@@ -213,7 +213,7 @@ The AI engine:
 
 ## Step 3 — AI Processing
 - JSON evidence aggregated
-- Claude API analyzes forensic artifacts
+- Ollama API analyzes forensic artifacts
 
 ## Step 4 — Report Generation
 - PDF forensic report generated
@@ -306,7 +306,7 @@ Deploy lightweight forensic AI on portable investigation devices.
 | Python | Core backend development |
 | ADB | Android communication |
 | SQLite | Artifact database parsing |
-| Claude API | AI forensic analysis |
+| Ollama API | AI forensic analysis |
 | PDF Libraries | Court-ready report generation |
 | CSV Processing | Structured evidence export |
 | JSON | Artifact aggregation |
@@ -369,7 +369,7 @@ Unauthorized forensic acquisition or misuse may violate privacy laws and cyberse
 
 MobiTrace Pro is an AI-powered Android mobile forensic investigation suite designed for digital crime investigation. The tool automates the extraction and analysis of forensic artifacts from Android devices connected via USB, covering call logs, SMS messages, WhatsApp conversations, image metadata, browser history, and network logs.
 
-Once extraction is complete, an integrated AI engine powered by Claude API automatically generates a comprehensive court-ready forensic report in PDF and CSV formats. Additionally, investigators can interact with the evidence through a natural language AI chat interface, querying specific evidence patterns and receiving targeted reports with exact file locations and timestamps.
+Once extraction is complete, an integrated AI engine powered by Ollama API automatically generates a comprehensive court-ready forensic report in PDF and CSV formats. Additionally, investigators can interact with the evidence through a natural language AI chat interface, querying specific evidence patterns and receiving targeted reports with exact file locations and timestamps.
 
 The tool addresses major gaps in current mobile forensics including high tool cost, lack of automation, absence of AI-powered reporting, and lack of standardized multi-artifact extraction frameworks.
 
