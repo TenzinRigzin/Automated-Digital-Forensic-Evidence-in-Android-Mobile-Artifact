@@ -1,0 +1,22 @@
+ADB commands used in the Project----------------------
+
+go to the specific folder and open terminal from there to save all the file to there itself
+
+
+Call log extraction:
+	adb pull /data/data/com.android.providers.contacts/databases/calllog.db
+
+Contact details extraction:
+	adb pull /data/data/com.android.providers.contacts/databases/contacts2.db
+
+SMS extraction:
+	adb shell "content query --uri content://sms/ --projection thread_id:address:date:body" > %USERPROFILE%\Desktop\data_input\sms_backup.txt
+
+Wifi connection History:
+	adb shell dumpsys wifi > full_wifi_dump.txt
+
+App Data Usage:
+	adb shell dumpsys netstats detail > netstats.txt
+
+IP address:
+	adb shell ip addr show           > ip_addresses.txt
